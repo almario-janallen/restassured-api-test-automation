@@ -11,7 +11,7 @@ import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import utils.ConfigReader;
-import utils.Constants;
+// import utils.Constants;
 
 public class BaseTest {
 

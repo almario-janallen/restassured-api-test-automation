@@ -40,4 +40,3 @@ Thumbs.db
 
 # Config (env-specific or sensitive)
 config.properties
-config.local.properties
