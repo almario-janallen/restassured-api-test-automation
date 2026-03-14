@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="reqres-api-suite" verbose="1">
+    <test name="users-api-tests">
+        <classes>
+            <class name="tests.SanityTest"/>
+        </classes>
+    </test>
+    <test name="auth-api-tests">
+        
+    </test>
+    <test name="resources-api-tests">
+
+    </test>
+</suite>

@@ -1,0 +1,43 @@
+# Maven
+target/
+pom.xml.tag
+pom.releaseBackup
+pom.next
+release.properties
+.mvn/timing.properties
+
+# Compiled
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Allure
+allure-results/
+allure-report/
+allure-results-history/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# VS Code (optional: remove .vscode/ if you want to share editor settings)
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config (env-specific or sensitive)
+config.properties
+config.local.properties
