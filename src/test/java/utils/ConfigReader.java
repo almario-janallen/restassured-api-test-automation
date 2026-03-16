@@ -35,4 +35,13 @@ public class ConfigReader {
         }
         return value;
     }
+
+    public static Long getLong(String key) {
+        String value = properties.getProperty(key);
+        try {
+            return Long.parseLong(value);
+        } catch(NumberFormatException e) {
+            throw new RuntimeException("Config key '" + key + "' expected a long but got: '" + value + "'");
+        }
+    }
 }

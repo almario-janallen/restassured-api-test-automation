@@ -32,8 +32,7 @@ public class BaseTest {
         responseSpec = new ResponseSpecBuilder()
                 .expectContentType(ContentType.JSON)
                 .expectResponseTime(
-                        org.hamcrest.Matchers.lessThan(
-                                Long.parseLong(ConfigReader.get("response.timeout.ms"))
+                        org.hamcrest.Matchers.lessThan(ConfigReader.getLong("response.timeout.ms")
                         )
                 )
                 .build();
