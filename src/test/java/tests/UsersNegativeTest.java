@@ -5,6 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import models.CreateUserRequest;
 import models.UpdateUserRequest;
@@ -28,6 +29,7 @@ public class UsersNegativeTest extends BaseTest {
     }
     
     @Test(groups = {"regression"})
+    @Feature("User")
     @Story("Get Users")
     @Description("Verify retrieving a user with non-existent ID returns 404 and an empty body")
     @Severity(SeverityLevel.NORMAL)
@@ -41,6 +43,7 @@ public class UsersNegativeTest extends BaseTest {
     }
 
     @Test(groups = {"regression"})
+    @Feature("User")
     @Story("Create User")
     @Description("Verify creating a user with empty body returns 201")
     @Severity(SeverityLevel.NORMAL)
@@ -56,6 +59,7 @@ public class UsersNegativeTest extends BaseTest {
     }
 
     @Test(groups = {"regression"})
+    @Feature("User")
     @Story("Update User")
     @Description("Verify updating non-existing user returns 200")
     @Severity(SeverityLevel.NORMAL)
@@ -71,6 +75,7 @@ public class UsersNegativeTest extends BaseTest {
     }
 
     @Test(groups = {"regression"})
+    @Feature("User")
     @Story("Delete User")
     @Description("Verify deleting non-existent user returns 204")
     @Severity(SeverityLevel.NORMAL)

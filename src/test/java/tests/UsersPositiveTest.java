@@ -5,6 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import models.CreateUserRequest;
 import models.UpdateUserRequest;
@@ -29,6 +30,7 @@ public class UsersPositiveTest extends BaseTest {
         userAPI = new UserAPI();
     }
     @Test(groups = {"smoke","regression"})
+    @Feature("User")
     @Story("Get Users")
     @Description("Verify listing all users returns 200 and a non-empty data array")
     @Severity(SeverityLevel.CRITICAL)
@@ -42,6 +44,7 @@ public class UsersPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
+    @Feature("User")
     @Story("Get Users")
     @Description("Verify listing users with page query returns 200 and a non-empty data array")
     @Severity(SeverityLevel.CRITICAL)
@@ -56,6 +59,7 @@ public class UsersPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
+    @Feature("User")
     @Story("Get Users")
     @Description("Verify listing specific user returns 200 and user data is not null")
     @Severity(SeverityLevel.CRITICAL)
@@ -69,6 +73,7 @@ public class UsersPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
+    @Feature("User")
     @Story("Create User")
     @Description("Verify creating user returns 201")
     @Severity(SeverityLevel.CRITICAL)
@@ -86,6 +91,7 @@ public class UsersPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
+    @Feature("User")
     @Story("Update User")
     @Description("Verify updating specific user returns 200")
     @Severity(SeverityLevel.CRITICAL)
@@ -103,6 +109,7 @@ public class UsersPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
+    @Feature("User")
     @Story("Delete User")
     @Description("Verify deleting specific user returns 204")
     @Severity(SeverityLevel.CRITICAL)
