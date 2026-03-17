@@ -33,10 +33,11 @@ public class UsersNegativeTest extends BaseTest {
     @Story("Get Users")
     @Description("Verify retrieving a user with non-existent ID returns 404 and an empty body")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetSpecificUser() {
+    public void testNonExistendUser() {
         Response response = userAPI.getUser(999);
 
         response.then()
+                .spec(responseSpec)
                 .statusCode(404)
                 .time(lessThan(ConfigReader.getLong("response.timeout.ms")))
                 .body(equalTo("{}"));
@@ -47,7 +48,7 @@ public class UsersNegativeTest extends BaseTest {
     @Story("Create User")
     @Description("Verify creating a user with empty body returns 201")
     @Severity(SeverityLevel.NORMAL)
-    public void testCreateUser() {
+    public void testCreateEmptyBodyUser() {
         CreateUserRequest createUser = new CreateUserRequest();
         Response response = userAPI.createUser(createUser);
 
@@ -63,7 +64,7 @@ public class UsersNegativeTest extends BaseTest {
     @Story("Update User")
     @Description("Verify updating non-existing user returns 200")
     @Severity(SeverityLevel.NORMAL)
-    public void testUpdateUser() {
+    public void testUpdateNonExistentUser() {
         UpdateUserRequest updateUser = new UpdateUserRequest("morpheus","zion resident");
 
         Response response = userAPI.updateUser(999, updateUser );
@@ -79,7 +80,7 @@ public class UsersNegativeTest extends BaseTest {
     @Story("Delete User")
     @Description("Verify deleting non-existent user returns 204")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeleteSpecificUser() {
+    public void testDeleteNonExistentUser() {
         Response response = userAPI.deleteUser(999);
 
         response.then()
