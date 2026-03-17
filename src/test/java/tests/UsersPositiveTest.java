@@ -21,12 +21,7 @@ import org.testng.annotations.Test;
 
 import api.UserAPI;
 
-
-// -------------------------------------------------------
-// POSITIVE TESTS
-// -------------------------------------------------------
-
-public class UsersTest extends BaseTest {
+public class UsersPositiveTest extends BaseTest {
     private UserAPI userAPI;
 
     @BeforeClass
