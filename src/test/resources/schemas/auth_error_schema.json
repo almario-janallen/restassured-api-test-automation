@@ -1,0 +1,11 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Auth Error Response Schema",
+    "description": "Shared error schema for failed login and register responses (400)",
+    "type": "object",
+    "required": ["error"],
+    "properties": {
+      "error": { "type": "string", "minLength": 1 }
+    },
+    "additionalProperties": false
+  }

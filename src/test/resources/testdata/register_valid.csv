@@ -1,0 +1,3 @@
+email,password,expectedStatusCode
+eve.holt@reqres.in,pistol,200
+eve.holt@reqres.in,cityslicka,200

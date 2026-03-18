@@ -1,0 +1,13 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Update User Response Schema",
+    "description": "Used for both PUT (full update) and PATCH (partial update) responses",
+    "type": "object",
+    "required": ["name", "job", "updatedAt"],
+    "properties": {
+      "name":      { "type": "string" },
+      "job":       { "type": "string" },
+      "updatedAt": { "type": "string", "format": "date-time" }
+    },
+    "additionalProperties": false
+  }

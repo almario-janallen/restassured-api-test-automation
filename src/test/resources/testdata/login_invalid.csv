@@ -1,0 +1,5 @@
+email,password,expectedStatusCode,expectedError
+eve.holt@reqres.in,,400,Missing password
+,cityslicka,400,Missing email or username
+invalid@reqres.in,wrongpassword,400,user not found
+notanemail,password123,400,user not found

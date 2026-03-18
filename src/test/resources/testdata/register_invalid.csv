@@ -1,0 +1,4 @@
+email,password,expectedStatusCode,expectedError
+sydney@fife,,400,Missing password
+,pistol,400,Missing email or username
+unregistered@test.com,password123,400,Note: Only defined users succeed registration
