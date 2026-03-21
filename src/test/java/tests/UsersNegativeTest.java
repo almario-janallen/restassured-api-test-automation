@@ -33,7 +33,7 @@ public class UsersNegativeTest extends BaseTest {
     @Story("Get Users")
     @Description("Verify retrieving a user with non-existent ID returns 404 and an empty body")
     @Severity(SeverityLevel.NORMAL)
-    public void testNonExistendUser() {
+    public void testNonExistentUser() {
         Response response = userAPI.getUser(999);
 
         response.then()

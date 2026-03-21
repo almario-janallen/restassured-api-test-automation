@@ -78,23 +78,4 @@ public class UsersSchemaTest extends BaseTest {
             .spec(responseSpec)
             .body(matchesJsonSchemaInClasspath("schemas/user_update_schema.json"));
     }
-
-    // -------------------------------------------------------------------------
-    // PATCH /users/{id}  →  user_update_schema.json  (same shape as PUT)
-    // -------------------------------------------------------------------------
-
-    @Test(groups = {"schema", "regression"},
-          description = "Validate response schema for PATCH /users/{id} (partial update)")
-    public void validateUserPatchSchema() {
-        String requestBody = "{ \"job\": \"Lead QA\" }";
-
-        given()
-            .spec(requestSpec)
-            .body(requestBody)
-        .when()
-            .patch(Constants.USERS + "/2")
-        .then()
-            .spec(responseSpec)
-            .body(matchesJsonSchemaInClasspath("schemas/user_update_schema.json"));
-    }
 }

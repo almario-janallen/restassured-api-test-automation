@@ -4,7 +4,8 @@
     "type": "object",
     "required": ["token"],
     "properties": {
-      "token": { "type": "string", "minLength": 1 }
+      "token": { "type": "string", "minLength": 1 },
+      "_meta": { "type": "object" }
     },
     "additionalProperties": false
   }

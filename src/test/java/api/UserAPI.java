@@ -26,7 +26,8 @@ public class UserAPI extends BaseTest {
     public Response deleteUser(int id) {
         return given(requestSpec)
             .when()
-            .delete(Constants.USER_BY_ID,id);
+            .delete(Constants.USER_BY_ID,id)
+            .andReturn();
     }
 
     public Response getUser(int id) {

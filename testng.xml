@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="reqres-api-suite" verbose="1">
-    <test name="users-api-tests">
+
+    <test name="sanity">
         <classes>
             <class name="tests.SanityTest"/>
         </classes>
     </test>
-    <test name="auth-api-tests">
-        
-    </test>
-    <test name="resources-api-tests">
 
+    <test name="users-api-tests">
+        <classes>
+            <class name="tests.UsersPositiveTest"/>
+            <class name="tests.UsersNegativeTest"/>
+            <class name="tests.UsersSchemaTest"/>
+            <class name="tests.UsersDataDrivenTest"/>
+        </classes>
     </test>
+
+    <test name="auth-api-tests">
+        <classes>
+            <class name="tests.AuthPositiveTest"/>
+            <class name="tests.AuthNegativeTest"/>
+            <class name="tests.AuthSchemaTest"/>
+            <class name="tests.AuthDataDrivenTest"/>
+        </classes>
+    </test>
+
+    <test name="resources-api-tests">
+        <classes>
+            <class name="tests.ResourcePositiveTest"/>
+            <class name="tests.ResourceNegativeTest"/>
+            <class name="tests.ResourceSchemaTest"/>
+        </classes>
+    </test>
+
 </suite>

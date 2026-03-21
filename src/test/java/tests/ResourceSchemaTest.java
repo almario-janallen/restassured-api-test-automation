@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static io.restassured.RestAssured.given;
 
-public class ResourcesSchemaTest extends BaseTest {
+public class ResourceSchemaTest extends BaseTest {
 
     // -------------------------------------------------------------------------
     // GET /unknown  →  resource_list_schema.json

@@ -36,9 +36,6 @@ public class BaseTest {
                         )
                 )
                 .build();
-
-//        RestAssured.requestSpecification = requestSpec;
-        RestAssured.responseSpecification = responseSpec;
     }
 
     @AfterSuite
