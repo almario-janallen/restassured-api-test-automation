@@ -1,36 +1,52 @@
 package tests;
 
 import base.BaseTest;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
+import io.restassured.response.Response;
+import models.LoginRequest;
+import models.RegisterRequest;
+
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import utils.Constants;
+
+import api.AuthAPI;
 import utils.DataProviders;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.emptyString;
 
+@Epic("Auth API")
 public class AuthDataDrivenTest extends BaseTest {
+    private AuthAPI authAPI;
+
+    @BeforeClass
+    public void setUp() {
+        authAPI = new AuthAPI();
+    }
 
     // -------------------------------------------------------------------------
     // POST /login (success)  —  driven by login_valid.csv
     // Columns: email, password, expectedStatusCode
     // -------------------------------------------------------------------------
 
-    @Test(groups = {"datadriven", "regression"},
-          dataProvider = "loginValidData",
-          dataProviderClass = DataProviders.class,
-          description = "Login with valid credentials from CSV")
+    @Test(groups = {"datadriven", "regression"},dataProvider = "loginValidData",dataProviderClass = DataProviders.class)
+    @Feature("Login User")
+    @Story("Login with Valid Credentials - Data Driven")
+    @Description("Login with valid credentials from CSV")
+    @Severity(SeverityLevel.CRITICAL)
     public void testLoginValidDataDriven(String email, String password, String expectedStatusCode) {
-        String requestBody = String.format("{ \"email\": \"%s\", \"password\": \"%s\" }", email, password);
+        LoginRequest request = buildLoginRequest(email, password);
+        Response response = authAPI.login(request);
 
-        given()
-            .spec(requestSpec)
-            .body(requestBody)
-        .when()
-            .post(Constants.LOGIN)
-        .then()
+        response.then()
+            .spec(responseSpec)
             .statusCode(Integer.parseInt(expectedStatusCode))
             .body("token", not(emptyString()));
     }
@@ -40,20 +56,17 @@ public class AuthDataDrivenTest extends BaseTest {
     // Columns: email, password, expectedStatusCode, expectedError
     // -------------------------------------------------------------------------
 
-    @Test(groups = {"datadriven", "regression"},
-          dataProvider = "loginInvalidData",
-          dataProviderClass = DataProviders.class,
-          description = "Login with invalid credentials from CSV")
-    public void testLoginInvalidDataDriven(String email, String password,
-                                           String expectedStatusCode, String expectedError) {
-        String requestBody = buildPartialAuthBody(email, password);
+    @Test(groups = {"datadriven", "regression"},dataProvider = "loginInvalidData",dataProviderClass = DataProviders.class)
+    @Feature("Login User")
+    @Story("Login with Invalid Credentials - Data Driven")
+    @Description("Login User with invalid credentials from CSV")
+    @Severity(SeverityLevel.NORMAL)
+    public void testLoginInvalidDataDriven(String email, String password, String expectedStatusCode, String expectedError) {
+        LoginRequest request = buildLoginRequest(email, password);
+        Response response = authAPI.login(request);
 
-        given()
-            .spec(requestSpec)
-            .body(requestBody)
-        .when()
-            .post(Constants.LOGIN)
-        .then()
+        response.then()
+            .spec(responseSpec)
             .statusCode(Integer.parseInt(expectedStatusCode))
             .body("error", equalTo(expectedError));
     }
@@ -63,22 +76,20 @@ public class AuthDataDrivenTest extends BaseTest {
     // Columns: email, password, expectedStatusCode
     // -------------------------------------------------------------------------
 
-    @Test(groups = {"datadriven", "regression"},
-          dataProvider = "registerValidData",
-          dataProviderClass = DataProviders.class,
-          description = "Register with valid credentials from CSV")
+    @Test(groups = {"datadriven", "regression"},dataProvider = "registerValidData",dataProviderClass = DataProviders.class)
+    @Feature("Register User")
+    @Story("Register with Valid Credentials - Data Driven")
+    @Description("Register User with Valid credentials from CSV")
+    @Severity(SeverityLevel.CRITICAL)
     public void testRegisterValidDataDriven(String email, String password, String expectedStatusCode) {
-        String requestBody = String.format("{ \"email\": \"%s\", \"password\": \"%s\" }", email, password);
+        RegisterRequest request = buildRegisterRequest(email, password);
+        Response response = authAPI.register(request);
 
-        given()
-            .spec(requestSpec)
-            .body(requestBody)
-        .when()
-            .post(Constants.REGISTER)
-        .then()
-            .statusCode(Integer.parseInt(expectedStatusCode))
-            .body("id", notNullValue())
-            .body("token", not(emptyString()));
+        response.then()
+                .spec(responseSpec)
+                .statusCode(Integer.parseInt(expectedStatusCode))
+                .body("id", notNullValue())
+                .body("token", not(emptyString()));
     }
 
     // -------------------------------------------------------------------------
@@ -86,22 +97,19 @@ public class AuthDataDrivenTest extends BaseTest {
     // Columns: email, password, expectedStatusCode, expectedError
     // -------------------------------------------------------------------------
 
-    @Test(groups = {"datadriven", "regression"},
-          dataProvider = "registerInvalidData",
-          dataProviderClass = DataProviders.class,
-          description = "Register with invalid credentials from CSV")
-    public void testRegisterInvalidDataDriven(String email, String password,
-                                              String expectedStatusCode, String expectedError) {
-        String requestBody = buildPartialAuthBody(email, password);
+    @Test(groups = {"datadriven", "regression"},dataProvider = "registerInvalidData",dataProviderClass = DataProviders.class)
+    @Feature("Register User")
+    @Story("Register with Invalid Credentials - Data Driven")
+    @Description("Register User with Invalid credentials from CSV")
+    @Severity(SeverityLevel.NORMAL)
+    public void testRegisterInvalidDataDriven(String email, String password,String expectedStatusCode, String expectedError) {
+        RegisterRequest request = buildRegisterRequest(email, password);
+        Response response = authAPI.register(request);
 
-        given()
-            .spec(requestSpec)
-            .body(requestBody)
-        .when()
-            .post(Constants.REGISTER)
-        .then()
-            .statusCode(Integer.parseInt(expectedStatusCode))
-            .body("error", equalTo(expectedError));
+        response.then()
+                .spec(responseSpec)
+                .statusCode(Integer.parseInt(expectedStatusCode))
+                .body("error", equalTo(expectedError));
     }
 
     // -------------------------------------------------------------------------
@@ -109,18 +117,29 @@ public class AuthDataDrivenTest extends BaseTest {
     // This simulates missing fields without sending empty strings to the API.
     // -------------------------------------------------------------------------
 
-    private String buildPartialAuthBody(String email, String password) {
-        boolean hasEmail    = email    != null && !email.trim().isEmpty();
-        boolean hasPassword = password != null && !password.trim().isEmpty();
+    private LoginRequest buildLoginRequest(String email, String password) {
+        LoginRequest request = new LoginRequest();
 
-        if (hasEmail && hasPassword) {
-            return String.format("{ \"email\": \"%s\", \"password\": \"%s\" }", email, password);
-        } else if (hasEmail) {
-            return String.format("{ \"email\": \"%s\" }", email);
-        } else if (hasPassword) {
-            return String.format("{ \"password\": \"%s\" }", password);
-        } else {
-            return "{}";
+        if (email != null && !email.trim().isEmpty()) {
+            request.setEmail(email);
         }
+        if (password != null && !password.trim().isEmpty()) {
+            request.setPassword(password);
+        }
+    
+        return request;
+    }
+
+    private RegisterRequest buildRegisterRequest(String email, String password) {
+        RegisterRequest request = new RegisterRequest();
+
+        if (email != null && !email.trim().isEmpty()) {
+            request.setEmail(email);
+        }
+        if (password != null && !password.trim().isEmpty()) {
+            request.setPassword(password);
+        }
+    
+        return request;
     }
 }

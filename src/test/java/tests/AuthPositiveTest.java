@@ -1,11 +1,12 @@
 package tests;
 
 import base.BaseTest;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
-import io.qameta.allure.Description;
-import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import models.LoginRequest;
 import models.RegisterRequest;
@@ -19,6 +20,7 @@ import org.testng.annotations.Test;
 
 import api.AuthAPI;
 
+@Epic("Auth API")
 public class AuthPositiveTest extends BaseTest {
     private AuthAPI authAPI;
 
@@ -28,8 +30,8 @@ public class AuthPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
-    @Feature("Auth")
-    @Story("Login User")
+    @Feature("Login User")
+    @Story("Login Valid User")
     @Description("Verify login user with valid credentials returns 200 and a token field in the body")
     @Severity(SeverityLevel.CRITICAL)
     public void testLoginUser() {
@@ -43,9 +45,9 @@ public class AuthPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
-    @Feature("Auth")
-    @Story("Register User")
-    @Description("Verify register user returns 201 with both id and token fields")
+    @Feature("Register User")
+    @Story("Register Valid User")
+    @Description("Verify register user with valid credentials returns 201 with both id and token fields")
     @Severity(SeverityLevel.CRITICAL)
     public void testRegisterUser() {
         RegisterRequest register = new RegisterRequest("eve.holt@reqres.in","pistol");
@@ -53,7 +55,7 @@ public class AuthPositiveTest extends BaseTest {
 
         response.then()
                 .spec(responseSpec)
-                .statusCode(200)
+                .statusCode(201)
                 .body("id",notNullValue())
                 .body("token",not(emptyString()));
     }
