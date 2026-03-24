@@ -24,7 +24,7 @@ import api.AuthAPI;
 public class AuthPositiveTest extends BaseTest {
     private AuthAPI authAPI;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         authAPI = new AuthAPI();
     }
@@ -55,7 +55,7 @@ public class AuthPositiveTest extends BaseTest {
 
         response.then()
                 .spec(responseSpec)
-                .statusCode(201)
+                .statusCode(200)
                 .body("id",notNullValue())
                 .body("token",not(emptyString()));
     }

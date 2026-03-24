@@ -40,3 +40,5 @@ Thumbs.db
 
 # Config (env-specific or sensitive)
 config.properties
+
+.allure

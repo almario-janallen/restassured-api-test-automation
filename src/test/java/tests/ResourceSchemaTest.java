@@ -1,43 +1,62 @@
 package tests;
 
-import utils.Constants;
-import base.BaseTest;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static io.restassured.RestAssured.given;
+import api.ResourceAPI;
+import base.BaseTest;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
+import io.restassured.response.Response;
 
+@Epic("Resource API")
 public class ResourceSchemaTest extends BaseTest {
+    private ResourceAPI resourceAPI;
+
+    @BeforeClass(alwaysRun = true)
+    public void setUp() {
+        resourceAPI = new ResourceAPI();
+    }
 
     // -------------------------------------------------------------------------
     // GET /unknown  →  resource_list_schema.json
     // -------------------------------------------------------------------------
 
-    @Test(groups = {"schema", "regression"},
-          description = "Validate response schema for GET /unknown (resource list)")
+    @Test(groups = {"schema", "regression"})
+    @Feature("Get Resource")
+    @Story("Get All Resources Schema")
+    @Description("Validate response schema for GET /unknown (resource list)")
+    @Severity(SeverityLevel.NORMAL)
     public void validateResourceListSchema() {
-        given()
-            .spec(requestSpec)
-        .when()
-            .get(Constants.RESOURCES)
-        .then()
-            .spec(responseSpec)
-            .body(matchesJsonSchemaInClasspath("schemas/resource_list_schema.json"));
+        Response response = resourceAPI.getResourceList();
+        
+        response.then()
+                .spec(responseSpec)
+                .statusCode(200)
+                .body(matchesJsonSchemaInClasspath("schemas/resource_list_schema.json"));
     }
 
     // -------------------------------------------------------------------------
     // GET /unknown/{id}  →  resource_single_schema.json
     // -------------------------------------------------------------------------
 
-    @Test(groups = {"schema", "regression"},
-          description = "Validate response schema for GET /unknown/{id} (single resource)")
+    @Test(groups = {"schema", "regression"})
+    @Feature("Get Resource")
+    @Story("Get Specific Resource Schema")
+    @Description("Validate response schema for GET /unknown/{id} (single resource)")
+    @Severity(SeverityLevel.NORMAL)
     public void validateResourceSingleSchema() {
-        given()
-            .spec(requestSpec)
-        .when()
-            .get(Constants.RESOURCES + "/2")
-        .then()
-            .spec(responseSpec)
-            .body(matchesJsonSchemaInClasspath("schemas/resource_single_schema.json"));
+        Response response = resourceAPI.getResource(1);
+        
+        response.then()
+                .spec(responseSpec)
+                .statusCode(200)
+                .body(matchesJsonSchemaInClasspath("schemas/resource_single_schema.json"));
     }
 }

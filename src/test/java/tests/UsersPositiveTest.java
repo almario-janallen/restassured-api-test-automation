@@ -5,6 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import models.CreateUserRequest;
@@ -22,16 +23,18 @@ import org.testng.annotations.Test;
 
 import api.UserAPI;
 
+@Epic("User API")
 public class UsersPositiveTest extends BaseTest {
     private UserAPI userAPI;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         userAPI = new UserAPI();
     }
+
     @Test(groups = {"smoke","regression"})
-    @Feature("User")
-    @Story("Get Users")
+    @Feature("Get User")
+    @Story("Get All Users")
     @Description("Verify listing all users returns 200 and a non-empty data array")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetAllUsers() {
@@ -44,8 +47,8 @@ public class UsersPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
-    @Feature("User")
-    @Story("Get Users")
+    @Feature("Get User")
+    @Story("Get Users Per Page")
     @Description("Verify listing users with page query returns 200 and a non-empty data array")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetAllUsersPerPage() {
@@ -59,8 +62,8 @@ public class UsersPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
-    @Feature("User")
-    @Story("Get Users")
+    @Feature("Get User")
+    @Story("Get Specific User")
     @Description("Verify listing specific user returns 200 and user data is not null")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetSpecificUser() {
@@ -73,8 +76,8 @@ public class UsersPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
-    @Feature("User")
-    @Story("Create User")
+    @Feature("Create User")
+    @Story("Create New User")
     @Description("Verify creating user returns 201")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateUser() {
@@ -91,8 +94,8 @@ public class UsersPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
-    @Feature("User")
-    @Story("Update User")
+    @Feature("Update User")
+    @Story("Update Existing User")
     @Description("Verify updating specific user returns 200")
     @Severity(SeverityLevel.CRITICAL)
     public void testUpdateUser() {
@@ -109,8 +112,8 @@ public class UsersPositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
-    @Feature("User")
-    @Story("Delete User")
+    @Feature("Delete User")
+    @Story("Delete Specific User")
     @Description("Verify deleting specific user returns 204")
     @Severity(SeverityLevel.CRITICAL)
     public void testDeleteSpecificUser() {

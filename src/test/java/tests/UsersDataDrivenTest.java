@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.notNullValue;
 public class UsersDataDrivenTest extends BaseTest {
     private UserAPI userAPI;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         userAPI = new UserAPI();
     }

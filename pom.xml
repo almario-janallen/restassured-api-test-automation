@@ -40,14 +40,14 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-rest-assured</artifactId>
             <version>2.33.0</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
         <!-- Source: https://mvnrepository.com/artifact/io.qameta.allure/allure-testng -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
             <version>2.33.0</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
         <!-- Source: https://mvnrepository.com/artifact/org.apache.poi/poi -->
         <dependency>
@@ -84,6 +84,13 @@
             <version>6.0.0</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Source: https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.25.1</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -96,7 +103,14 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.25.1/aspectjweaver-1.9.25.1.jar"</argLine>
                 </configuration>
+            </plugin>
+            <plugin>
+                <!-- Source: https://mvnrepository.com/artifact/io.qameta.allure/allure-maven -->
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.17.0</version>
             </plugin>
         </plugins>
     </build>

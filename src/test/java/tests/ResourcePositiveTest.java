@@ -12,23 +12,25 @@ import org.testng.annotations.Test;
 import api.ResourceAPI;
 import base.BaseTest;
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
 
+@Epic("Resource API")
 public class ResourcePositiveTest extends BaseTest {
     private ResourceAPI resourceAPI;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         resourceAPI = new ResourceAPI();
     }
 
     @Test(groups = {"regression"})
-    @Feature("Resource")
-    @Story("Get Resources")
+    @Feature("Get Resource")
+    @Story("Get Specific Resource")
     @Description("Verify getting specific resource returns 200 with expected fields (id, name ,year, color, pantone_value)")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetSpecificResource() {
@@ -45,7 +47,7 @@ public class ResourcePositiveTest extends BaseTest {
     }
 
     @Test(groups = {"smoke","regression"})
-    @Feature("Resource")
+    @Feature("Get Resource")
     @Story("Get Resources")
     @Description("Verify getting all resources returns 200 and a non-empty data array")
     @Severity(SeverityLevel.CRITICAL)
@@ -59,8 +61,8 @@ public class ResourcePositiveTest extends BaseTest {
     }
 
     @Test(groups = {"regression"})
-    @Feature("Resource")
-    @Story("Get Resources")
+    @Feature("Get Resource")
+    @Story("Get Resources Per Page")
     @Description("Verify getting resource with page query returns 200 and a non-empty data array")
     @Severity(SeverityLevel.NORMAL)
     public void testGetAllResourcesPerPage() {

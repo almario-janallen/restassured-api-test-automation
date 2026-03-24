@@ -1,5 +1,6 @@
 package base;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -11,7 +12,6 @@ import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import utils.ConfigReader;
-// import utils.Constants;
 
 public class BaseTest {
 
@@ -19,12 +19,13 @@ public class BaseTest {
     protected static ResponseSpecification responseSpec;
 
     @BeforeSuite
-    public void setUp() {
+    public void initSuite() {
         requestSpec = new RequestSpecBuilder()
                 .setBaseUri(ConfigReader.get("base.url"))
                 .setContentType(ContentType.JSON)
                 .addHeader("Accept", "application/json")
                 .addHeader("x-api-key", ConfigReader.get("api.key"))
+                .addFilter(new AllureRestAssured())
                 .addFilter(new RequestLoggingFilter())
                 .addFilter(new ResponseLoggingFilter())
                 .build();
@@ -39,7 +40,7 @@ public class BaseTest {
     }
 
     @AfterSuite
-    public void tearDown() {
+    public void tearDownSuite() {
         RestAssured.reset();
         System.out.println("✅ Test suite completed. RestAssured config reset.");
     }

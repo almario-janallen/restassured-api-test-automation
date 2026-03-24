@@ -14,8 +14,8 @@ public class SanityTest extends BaseTest {
 
     @BeforeSuite(alwaysRun = true)
     @Override
-    public void setUp() {
-        super.setUp();
+    public void initSuite() {
+        super.initSuite();
     }
 
     @Test(groups = {"sanity"})

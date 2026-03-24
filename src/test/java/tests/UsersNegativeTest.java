@@ -5,6 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import models.CreateUserRequest;
@@ -20,17 +21,18 @@ import org.testng.annotations.Test;
 
 import api.UserAPI;
 
+@Epic("User API")
 public class UsersNegativeTest extends BaseTest {
     private UserAPI userAPI;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         userAPI = new UserAPI();
     }
     
     @Test(groups = {"regression"})
-    @Feature("User")
-    @Story("Get Users")
+    @Feature("Get User")
+    @Story("Get Nonexistent User")
     @Description("Verify retrieving a user with non-existent ID returns 404 and an empty body")
     @Severity(SeverityLevel.NORMAL)
     public void testNonExistentUser() {
@@ -44,8 +46,8 @@ public class UsersNegativeTest extends BaseTest {
     }
 
     @Test(groups = {"regression"})
-    @Feature("User")
-    @Story("Create User")
+    @Feature("Create User")
+    @Story("Create Empty Body User")
     @Description("Verify creating a user with empty body returns 201")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateEmptyBodyUser() {
@@ -60,8 +62,8 @@ public class UsersNegativeTest extends BaseTest {
     }
 
     @Test(groups = {"regression"})
-    @Feature("User")
-    @Story("Update User")
+    @Feature("Update User")
+    @Story("Update Nonexistent User")
     @Description("Verify updating non-existing user returns 200")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateNonExistentUser() {
@@ -76,8 +78,8 @@ public class UsersNegativeTest extends BaseTest {
     }
 
     @Test(groups = {"regression"})
-    @Feature("User")
-    @Story("Delete User")
+    @Feature("Delete User")
+    @Story("Delete Nonexistent User")
     @Description("Verify deleting non-existent user returns 204")
     @Severity(SeverityLevel.NORMAL)
     public void testDeleteNonExistentUser() {

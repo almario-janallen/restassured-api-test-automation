@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class AuthNegativeTest extends BaseTest {
     private AuthAPI authAPI;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         authAPI = new AuthAPI();
     }

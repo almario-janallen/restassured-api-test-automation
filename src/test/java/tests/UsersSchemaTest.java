@@ -1,43 +1,64 @@
 package tests;
 
-import utils.Constants;
 import base.BaseTest;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
+import io.restassured.response.Response;
+import models.CreateUserRequest;
+import models.UpdateUserRequest;
+
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import api.UserAPI;
+
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static io.restassured.RestAssured.given;
 
+@Epic("User API")
 public class UsersSchemaTest extends BaseTest {
+    private UserAPI userAPI;
 
+    @BeforeClass(alwaysRun = true)
+    public void setUp() {
+        userAPI = new UserAPI();
+    }
     // -------------------------------------------------------------------------
     // GET /users  →  user_list_schema.json
     // -------------------------------------------------------------------------
 
-    @Test(groups = {"schema", "regression"},
-          description = "Validate response schema for GET /users (list)")
+    @Test(groups = {"schema", "regression"})
+    @Feature("Get User")
+    @Story("Get All Users Schema")
+    @Description("Validate response schema for GET /users (list)")
+    @Severity(SeverityLevel.NORMAL)
     public void validateUserListSchema() {
-        given()
-            .spec(requestSpec)
-        .when()
-            .get(Constants.USERS)
-        .then()
-            .spec(responseSpec)
-            .body(matchesJsonSchemaInClasspath("schemas/user_list_schema.json"));
+        Response response = userAPI.getUserList();
+
+        response.then()
+                .spec(responseSpec)
+                .statusCode(200)
+                .body(matchesJsonSchemaInClasspath("schemas/user_list_schema.json"));
     }
 
     // -------------------------------------------------------------------------
     // GET /users/{id}  →  user_single_schema.json
     // -------------------------------------------------------------------------
 
-    @Test(groups = {"schema", "regression"},
-          description = "Validate response schema for GET /users/{id} (single user)")
+    @Test(groups = {"schema", "regression"})
+    @Feature("Get User")
+    @Story("Get Single User Schema")
+    @Description("Validate response schema for GET /users/{id} (single user)")
+    @Severity(SeverityLevel.NORMAL)
     public void validateUserSingleSchema() {
-        given()
-            .spec(requestSpec)
-        .when()
-            .get(Constants.USERS + "/2")
-        .then()
+        Response response = userAPI.getUser(1);
+
+        response.then()
             .spec(responseSpec)
+            .statusCode(200)
             .body(matchesJsonSchemaInClasspath("schemas/user_single_schema.json"));
     }
 
@@ -45,18 +66,18 @@ public class UsersSchemaTest extends BaseTest {
     // POST /users  →  user_create_schema.json
     // -------------------------------------------------------------------------
 
-    @Test(groups = {"schema", "regression"},
-          description = "Validate response schema for POST /users (create user)")
+    @Test(groups = {"schema", "regression"})
+    @Feature("Create User")
+    @Story("Create User Schema")
+    @Description("Validate response schema for POST /users (create user)")
+    @Severity(SeverityLevel.NORMAL)
     public void validateUserCreateSchema() {
-        String requestBody = "{ \"name\": \"John Doe\", \"job\": \"QA Engineer\" }";
+        CreateUserRequest createUser = new CreateUserRequest("testName","testJob");
+        Response response = userAPI.createUser(createUser);
 
-        given()
-            .spec(requestSpec)
-            .body(requestBody)
-        .when()
-            .post(Constants.USERS)
-        .then()
-            .statusCode(201)
+        response.then()
+                .spec(responseSpec)
+                .statusCode(201)
             .body(matchesJsonSchemaInClasspath("schemas/user_create_schema.json"));
     }
 
@@ -64,18 +85,19 @@ public class UsersSchemaTest extends BaseTest {
     // PUT /users/{id}  →  user_update_schema.json
     // -------------------------------------------------------------------------
 
-    @Test(groups = {"schema", "regression"},
-          description = "Validate response schema for PUT /users/{id} (full update)")
+    @Test(groups = {"schema", "regression"})
+    @Feature("Update User")
+    @Story("Update User Schema")
+    @Description("Validate response schema for PUT /users/{id} (full update)")
+    @Severity(SeverityLevel.NORMAL)
     public void validateUserPutSchema() {
-        String requestBody = "{ \"name\": \"Jane Doe\", \"job\": \"Senior QA\" }";
+        UpdateUserRequest updateUser = new UpdateUserRequest("morpheus","zion resident");
 
-        given()
-            .spec(requestSpec)
-            .body(requestBody)
-        .when()
-            .put(Constants.USERS + "/2")
-        .then()
-            .spec(responseSpec)
+        Response response = userAPI.updateUser(1, updateUser );
+
+        response.then()
+                .spec(responseSpec)
+                .statusCode(200)
             .body(matchesJsonSchemaInClasspath("schemas/user_update_schema.json"));
     }
 }
