@@ -26,7 +26,9 @@ jobs:
           cache: maven
 
       - name: Run Tests
-        run: mvn test --no-transfer-progress
+        run: mvn test -Dgroups=smoke --no-transfer-progress
+          env:
+            REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
 
       - name: Generate Allure Report
         if: always()

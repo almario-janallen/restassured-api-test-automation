@@ -39,6 +39,6 @@ bin/
 Thumbs.db
 
 # Config (env-specific or sensitive)
-config.properties
+local.properties
 
 .allure

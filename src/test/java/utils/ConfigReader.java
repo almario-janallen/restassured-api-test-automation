@@ -11,11 +11,17 @@ public class ConfigReader {
     static {
         loadFile("src/test/resources/config.properties");
 
-        String env = System.getProperty("env","qa");
-        String envPath ="src/test/resources/" + env + ".properties";
+        // Load local secrets file if present (never committed to repo)
+        File localFile = new File("src/test/resources/local.properties");
+        if (localFile.exists()) {
+            loadFile("src/test/resources/local.properties");
+        }
+
+        String env = System.getProperty("env", "qa");
+        String envPath = "src/test/resources/" + env + ".properties";
 
         File envFile = new File(envPath);
-        if(envFile.exists()) {
+        if (envFile.exists()) {
             loadFile(envPath);
         }
     }
@@ -30,7 +36,10 @@ public class ConfigReader {
 
     public static String get(String key) {
         String value = properties.getProperty(key);
-        if(value==null) {
+        if (value == null) {
+            value = System.getenv(key);
+        }
+        if (value == null) {
             throw new RuntimeException("Property '" + key + "' not found in config");
         }
         return value;
@@ -40,7 +49,7 @@ public class ConfigReader {
         String value = properties.getProperty(key);
         try {
             return Long.parseLong(value);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new RuntimeException("Config key '" + key + "' expected a long but got: '" + value + "'");
         }
     }
