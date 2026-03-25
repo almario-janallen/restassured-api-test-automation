@@ -24,7 +24,7 @@ public class BaseTest {
                 .setBaseUri(ConfigReader.get("base.url"))
                 .setContentType(ContentType.JSON)
                 .addHeader("Accept", "application/json")
-                .addHeader("x-api-key", ConfigReader.get("api.key"))
+                .addHeader("x-api-key", ConfigReader.get("REQRES_API_KEY"))
                 .addFilter(new AllureRestAssured())
                 .addFilter(new RequestLoggingFilter())
                 .addFilter(new ResponseLoggingFilter())
