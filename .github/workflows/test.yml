@@ -27,7 +27,7 @@ jobs:
 
       - name: Run Tests
         run: mvn test -Dgroups=smoke --no-transfer-progress
-          env:
+        env:
             REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
 
       - name: Generate Allure Report
